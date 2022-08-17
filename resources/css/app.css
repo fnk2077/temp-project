@@ -11,7 +11,7 @@
 }
 
 .current-page {
-    @apply text-white bg-blue-500 md:bg-transparent md:text-blue-500;
+    @apply border-b-4 border-b-amber-500;
 }
 
 .app-button-green {

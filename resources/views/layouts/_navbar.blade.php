@@ -12,19 +12,19 @@
                 <div class="flex md:flex-row md:space-x-12">
                 <li>
                         <a href="{{ route('posts.index') }}"
-                           class="hover:bg-gray-100 block py-2 pr-4 pl-3 mt-5 text-center inline-flex items-center rounded-lg @if(Route::currentRouteName() === 'posts.index') current-page @endif" >
+                           class="hover:bg-gray-100 block py-2 pr-4 pl-3 mt-5 text-center inline-flex items-center @if(Route::currentRouteName() === 'posts.index') current-page @endif" >
                             Posts
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('posts.create') }}"
-                           class="hover:bg-gray-100 block py-2 pr-4 pl-3 mt-5 text-center inline-flex items-center rounded-lg @if(Route::currentRouteName() === 'posts.create') current-page @endif">
+                           class="hover:bg-gray-100 block py-2 pr-4 pl-3 mt-5 text-center inline-flex items-center @if(Route::currentRouteName() === 'posts.create') current-page @endif">
                             New Post
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('tags.index') }}"
-                           class="hover:bg-gray-100 block py-2 pr-4 pl-3 mt-5 text-center inline-flex items-center rounded-lg @if(Route::currentRouteName() === 'tags.index') current-page @endif" >
+                           class="hover:bg-gray-100 block py-2 pr-4 pl-3 mt-5 text-center inline-flex items-center @if(Route::currentRouteName() === 'tags.index') current-page @endif" >
                             Tags
                         </a>
                     </li>
