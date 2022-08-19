@@ -30,3 +30,5 @@ Route::post('/posts/{post}/comments/store', [\App\Http\Controllers\PostControlle
 Route::resource('/posts', \App\Http\Controllers\PostController::class);
 
 Route::resource('/tags', \App\Http\Controllers\TagController::class);
+
+Route::resource('/chart', \App\Http\Controllers\ChartController::class);
