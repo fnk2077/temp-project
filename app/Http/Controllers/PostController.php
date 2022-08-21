@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Image;
+use App\Models\OrganizationTag;
+use App\Models\StatusTracker;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Models\Post;
@@ -38,6 +41,7 @@ class PostController extends Controller
     {
         $this->authorize('create', Post::class);
 
+
         return view('posts.create');
     }
 
@@ -51,23 +55,54 @@ class PostController extends Controller
     {
         $this->authorize('create', Post::class);
 
-        $validated = $request->validate([
+        $this->validate($request,[
             'title' => ['required', 'max:255', 'min:5'],
-            'description' => ['required', 'max:1000']
+            'description' => ['required', 'max:1000'],
+            //หาวิธี validate ให้มีรูปอย่างเดียว
         ]);
+        $checkboxStatus = (boolean)$request->input('status');;
+
 
         $post = new Post();
         $post->title = $request->input('title');
         $post->description = $request->input('description');
-//        $post->user_id = Auth::user()->id;
         $post->user_id = $request->user()->id;
-        $post->save();
+        $post->status = $checkboxStatus;
 
-        $tags = $request->get('tags');
-        $tag_ids = $this->syncTags($tags);
-        $post->tags()->sync($tag_ids);
 
-        return redirect()->route('posts.show', ['post' => $post->id]);
+        $post->tag_id = $request->input('tags');
+        $post->organization_tag_id = $request->input('organizations');
+        $post->progression = $request->input('progression');
+
+
+
+        if($request->hasFile('images')) {
+            $request->validate([
+                'images' => 'required',
+                'images.*' => 'mimes:jpg,png,jpeg,gif,svg'
+            ]);
+            $post->save();
+            foreach ($request->file('images') as $saves) {
+                $save = new Image();
+                $title = time().$saves->getClientOriginalName();
+                $saves->move(public_path().'/images/',$title);
+                $save->title = $title;
+                $save->post_id = $post->id;
+                $save->save();
+                $post->images()->save($save);
+            }
+        }
+
+
+
+
+
+        $statusTracker = new StatusTracker();
+        $statusTracker->message = "ยื่นคำร้องเรียบร้อยค่ะ";
+        $post->statusTrackers()->save($statusTracker);
+
+
+        return redirect()->route('posts.show', ['post' => $post->id])->with('status',$post->status);
         //                     -------------------------^
         //                    |
         // GET|HEAD  posts/{post} ......... posts.show › PostController@show
@@ -81,7 +116,7 @@ class PostController extends Controller
      */
     public function show(Post $post)    // Dependency Injection
     {
-        return view('posts.show', ['post' => $post]);
+        return view('posts.show', ['post' => $post])->with('status',$post->status);
     }
 
     /**
@@ -94,9 +129,10 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
 
-        $tags = implode(', ', $post->tags->pluck('name')->all());
+        $tags = $post->tag->name;
 
-        return view('posts.edit', ['post' => $post, 'tags' => $tags]);
+
+        return view('posts.edit', ['post' => $post, 'tags' => $tags, 'organizations'])->with('status',$post->status);;
     }
 
     /**
@@ -117,34 +153,14 @@ class PostController extends Controller
 
         $post->title = $request->input('title');
         $post->description = $request->input('description');
+        $post->tag_id = $request->input('tags');
+        $post->organization_tag_id = $request->input('organizations');
+        $post->progression = $request->input('progression');
+
         $post->save();
 
-        $tags = $request->get('tags');
-        $tag_ids = $this->syncTags($tags);
-        $post->tags()->sync($tag_ids);
 
-        return redirect()->route('posts.show', ['post' => $post->id]);
-    }
-
-    private function syncTags($tags)
-    {
-        $tags = explode(',', $tags);
-        $tags = array_map(function($v) {
-            // use Illuminate\Support\Str; ก่อน class
-            return Str::ucfirst(trim($v));
-        }, $tags);
-
-        $tag_ids = [];
-        foreach($tags as $tag_name) {
-            $tag = Tag::where('name', $tag_name)->first();
-            if (!$tag) {
-                $tag = new Tag();
-                $tag->name = $tag_name;
-                $tag->save();
-            }
-            $tag_ids[] = $tag->id;
-        }
-        return $tag_ids;
+        return redirect()->route('posts.show', ['post' => $post->id])->with('status',$post->status);;
     }
 
     /**
@@ -160,16 +176,28 @@ class PostController extends Controller
         $title = $request->input('title');
         if ($title == $post->title) {
             $post->delete();
-            return redirect()->route('posts.index');
+            return redirect()->route('posts.index')->with('status',$post->status);;
         }
         return redirect()->back();
     }
+
+
 
     public function storeComment(Request $request, Post $post)
     {
         $comment = new Comment();
         $comment->message = $request->get('message');
         $post->comments()->save($comment);
-        return redirect()->route('posts.show', ['post' => $post->id]);
+        return redirect()->route('posts.show', ['post' => $post->id])->with('status',$post->status);;
     }
+
+    public function storeStatus(Request $request, Post $post)
+    {
+        $statusTracker = new StatusTracker();
+        $statusTracker->message = $request->get('message');
+        $post->statusTrackers()->save($statusTracker);
+        return redirect()->route('posts.show', ['post' => $post->id])->with('status',$post->status);;
+    }
+
+
 }

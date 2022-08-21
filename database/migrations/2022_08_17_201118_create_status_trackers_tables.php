@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('post_tag', function (Blueprint $table) {
+        Schema::create('status_trackers', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Post::class); // `post_id`
-            $table->foreignIdFor(\App\Models\Tag::class);  // `tag_id`
+            $table->foreignIdFor(\App\Models\Post::class); // foreign key `post_id`
+            $table->text('message'); //
             $table->timestamps();
+            $table->softDeletes();    // `deleted_at`
         });
     }
 
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_tag');
+        Schema::dropIfExists('status_trackers');
     }
 };

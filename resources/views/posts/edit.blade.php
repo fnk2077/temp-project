@@ -25,14 +25,35 @@
                        placeholder="" required>
             </div>
 
-            <div class="relative z-0 mb-6 w-full group">
-                <label for="tags" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                    Tags (separated by comma)
-                </label>
-                <input type="text" name="tags" id="tags"
-                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                       value="{{ $tags }}"
-                       placeholder="" autocomplete="off">
+            <div class="container">
+                <label class="form-label text-green-400" style="font-weight: bold;" for="tags">Tags</label>
+                <select class="form-input" style="color: #41A7A5" aria-label="Default select example" id="tags" name="tags" required >
+                    <option selected disabled hidden value="">-------Select Tags-------</option>
+                    @foreach (\App\Models\Tag::all() as $tag)
+                        <option value="{{$tag->id}}" id="tags" name="tags" >{{$tag->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="container">
+                <label class="form-label text-green-400" style="font-weight: bold;" for="organizations">Tags</label>
+                <select class="form-input" style="color: #41A7A5" aria-label="Default select example" id="organizations" name="organizations" required >
+                    <option selected disabled hidden value="">-------Select Tags-------</option>
+                    @foreach (\App\Models\OrganizationTag::all() as $organizationTag)
+                        <option value="{{$organizationTag->id}}" id="tags" name="tags" >{{$organizationTag->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="container">
+                <label class="form-label text-green-400" style="font-weight: bold;" for="progression">Tags</label>
+                <select class="form-input" style="color: #41A7A5" aria-label="Default select example" id="progression" name="progression" required >
+                    <option selected disabled hidden value="">-------Select Tags-------</option>
+                    <option value="ยื่นคำร้อง/ปัญหา" id="progression" name="progression" >ยื่นคำร้อง/ปัญหา</option>
+                    <option value="รับคำร้อง/ปัญหา" id="progression" name="progression" >รับคำร้อง/ปัญหา</option>
+                    <option value="กำลังดำเนินการ" id="progression" name="progression" >กำลังดำเนินการ</option>
+                    <option value="เสร็จสมบูรณ์" id="progression" name="progression" >เสร็จสมบูรณ์</option>
+                </select>
             </div>
 
             <div class="relative z-0 mb-6 w-full group">

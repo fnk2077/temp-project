@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tag;
+use App\Models\OrganizationTag;
 use Illuminate\Http\Request;
 
-class TagController extends Controller
+class OrganizationTagController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,9 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::get();
-        return view('tags.index', ['tags' => $tags]);
+        //
+        $tags = OrganizationTag::get();
+        return view('organizationTags.index', ['organizationTags' => $tags]);
     }
 
     /**
@@ -37,29 +38,30 @@ class TagController extends Controller
     public function store(Request $request)
     {
         //
-        $tag = new Tag();
-        $tag->name = $request->input('id');
+        $organizationTag = new OrganizationTag();
+        $organizationTag->name = $request->input('id');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\OrganizationTag  $organizationTag
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $tag = Tag::where('name', $id)->firstOrFail();
-        return view('tags.show', ['tag' => $tag]);
+        //
+        $organizationTag = organizationTag::where('name', $id)->firstOrFail();
+        return view('organizationTags.show', ['organizationTag' => $organizationTag]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\OrganizationTag  $organizationTag
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(OrganizationTag $organizationTag)
     {
         //
     }
@@ -68,10 +70,10 @@ class TagController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\OrganizationTag  $organizationTag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, OrganizationTag $organizationTag)
     {
         //
     }
@@ -79,10 +81,10 @@ class TagController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\OrganizationTag  $organizationTag
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(OrganizationTag $organizationTag)
     {
         //
     }

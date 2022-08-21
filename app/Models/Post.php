@@ -10,9 +10,13 @@ class Post extends Model
 {
     use HasFactory; // trait
 
-    public function tags()
+    public function tag()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsTo(Tag::class);
+    }
+
+    public function organizationTag(){
+        return $this->belongsTo(OrganizationTag::class);
     }
 
     public function user()
@@ -20,11 +24,19 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function images(){
+        return $this->hasMany(Image::class);
+    }
+
     // Post hasMany comments, 1 โพสต์ มีหลาย คอมเมนต์ (มี s ด้วย)
     // ฟังก์ชัน คืนค่า ความสัมพันธ์ hasMany
     // attribute `comments` คืนค่า Collection ที่ผูกกับ Post นั้น
     public function comments() {
         return $this->hasMany(Comment::class);
+    }
+
+    public function statusTrackers(){
+        return $this->hasMany(StatusTracker::class);
     }
 
     public function scopeAdvertise($query)

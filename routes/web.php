@@ -27,8 +27,13 @@ require __DIR__.'/auth.php';
 Route::post('/posts/{post}/comments/store', [\App\Http\Controllers\PostController::class, 'storeComment'])
     ->name('posts.comments.store');
 
+Route::post('/posts/{post}/statusTrackers/store', [\App\Http\Controllers\PostController::class, 'storeStatus'])
+    ->name('posts.statusTrackers.store');
+
 Route::resource('/posts', \App\Http\Controllers\PostController::class);
 
 Route::resource('/tags', \App\Http\Controllers\TagController::class);
+
+Route::resource('/organizationTags', \App\Http\Controllers\OrganizationTagController::class);
 
 Route::resource('/chart', \App\Http\Controllers\ChartController::class);

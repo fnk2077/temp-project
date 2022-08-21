@@ -57,6 +57,10 @@ class PostPolicy
             ($user->isUser() and $user->id === $post->user_id);
     }
 
+    public function updateStatus(User $user, Post $post){
+        return $user->isAdmin();
+    }
+
     /**
      * Determine whether the user can delete the model.
      *

@@ -14,7 +14,7 @@
 <body>
     @include('layouts._navbar')
 
-    <div class="bg-no-repeat bg-center bg-fixed" style="background-image: url('{{ asset('imgs/bg.png')}}')">
+    <div>
         @yield('content')
     </div>
 

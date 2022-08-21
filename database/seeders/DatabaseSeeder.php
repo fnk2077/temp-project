@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\OrganizationTag;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -18,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PostSeeder::class);
         $this->call(CommentSeeder::class);
         $this->call(TagSeeder::class);
+        $this->call(OrganizationSeeder::class);
 
         // \App\Models\User::factory(10)->create();
 
