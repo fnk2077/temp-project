@@ -44,8 +44,8 @@
                     </li>
 
                     <li>
-                        <form class="pt-4">
-                            <input class="normal-field" type="search" placeholder="Search .." aria-label="Search">
+                        <form action="/search" method="get" class="pt-4">
+                            <input class="normal-field" name="search" type="search" placeholder="Search ..">
                                 <button class="app-button-orange" type="submit">Search</button>
                         </form>
                     </li>
@@ -53,7 +53,7 @@
                 </div>
 
 
-                <div class="flex md:flex-row md:space-x-8 mt-5 absolute right-20">
+                <div class="flex  justify-end pl-36 pt-4">
                     <li>
                         <button id="dropdownDefault" data-dropdown-toggle="dropdown" type="button"
                             class="hover:bg-gray-100 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"

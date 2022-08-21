@@ -9,12 +9,12 @@ class ChartController extends Controller
 {
     public function index() {
         $label = [];
-        $price = [];
+        $count = [];
         $tags = Tag::get();
         foreach($tags as $tag){
             array_push($label, $tag->name);
-            array_push($price, $tag->posts->count());
+            array_push($count, $tag->posts->count());
         }
-        return view('chart',['labels'=> $label , 'prices' => $price ]);
+        return view('chart',['labels'=> $label , 'counts' => $count ]);
     }
 }

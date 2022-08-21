@@ -6,20 +6,20 @@
         <h1 class="text-3xl mx-4 mt-6">
             All Posts
         </h1>
-        <div class="my-1 px-8 py-2 flex flex-wrap justify-between space-y-6">
+        <div class="my-1 px-8 py-2 grid grid-cols-4 gap-4">
             @foreach($posts as $post)
                 <a href="{{ route('posts.show', ['post' => $post->id]) }}"
-                   class="block p-6 w-full bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 ">
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
+                   class="group block p-6 w-full bg-white rounded-lg border border-gray-200 shadow-md hover:bg-orange-400 ">
+                    <h4 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 break-words group-hover:text-white">
                         {{ $post->title }}
-                    </h5>
+                    </h4>
 
                     @if($post->status)
                         <p>
                             By anonymous
                         </p>
                     @else
-                        <p>
+                        <p class="group-hover:text-white">
                             By {{ $post->user->name }}
                         </p>
                     @endif

@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use App\Models\Tag;
+use App\Models\OrganizationTag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,7 +24,11 @@ class PostFactory extends Factory
             'title' => fake()->realText(30),
             'description' => fake()->realText(200),
             'view_count' => fake()->numberBetween(0, 200000),
-            'like_count' => fake()->numberBetween(0, 50000)
+            'like_count' => fake()->numberBetween(0, 50000),
+            'status'=> fake()->numberBetween(0, 1),
+            'progression'=> fake()->realText(30),
+            'tag_id' => fake()->numberBetween(0, 50000),
+            'organization_tag_id' => fake()->numberBetween(0, 9),
         ];
     }
 }

@@ -199,5 +199,11 @@ class PostController extends Controller
         return redirect()->route('posts.show', ['post' => $post->id])->with('status',$post->status);;
     }
 
+    public function search(Request $request){
+        $search = $request->get('search');
+        $posts = Post::where('title','LIKE', '%'.$search.'%')->paginate(15);
+        return view('posts.index',['posts' => $posts]);
+    }
+
 
 }

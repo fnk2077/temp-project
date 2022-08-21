@@ -37,3 +37,5 @@ Route::resource('/tags', \App\Http\Controllers\TagController::class);
 Route::resource('/organizationTags', \App\Http\Controllers\OrganizationTagController::class);
 
 Route::resource('/charts', \App\Http\Controllers\ChartController::class);
+
+Route::get('/search',[\App\Http\Controllers\PostController::class ,'search']);
