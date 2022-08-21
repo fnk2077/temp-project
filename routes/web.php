@@ -36,4 +36,4 @@ Route::resource('/tags', \App\Http\Controllers\TagController::class);
 
 Route::resource('/organizationTags', \App\Http\Controllers\OrganizationTagController::class);
 
-Route::resource('/chart', \App\Http\Controllers\ChartController::class);
+Route::resource('/charts', \App\Http\Controllers\ChartController::class);

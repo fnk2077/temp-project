@@ -28,6 +28,21 @@
                             Tags
                         </a>
                     </li>
+
+                    <li>
+                        <a href="{{ route('organizationTags.index') }}"
+                           class="hover:bg-gray-100 block py-2 pr-4 pl-3 mt-5 text-center inline-flex items-center @if(Route::currentRouteName() === 'organizationTags.index') current-page @endif" >
+                           Organization
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('charts.index') }}"
+                           class="hover:bg-gray-100 block py-2 pr-4 pl-3 mt-5 text-center inline-flex items-center @if(Route::currentRouteName() === 'charts.index') current-page @endif" >
+                           Chart
+                        </a>
+                    </li>
+
                     <li>
                         <form class="pt-4">
                             <input class="normal-field" type="search" placeholder="Search .." aria-label="Search">
