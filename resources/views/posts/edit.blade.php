@@ -95,6 +95,13 @@
 
             <div>
                 <h3 class="text-red-600 mb-4 text-2xl">
+                    Delete Images
+                    <p class="text-gray-800 text-xl">
+                        Once you delete images, there is no going back. Please be certain.
+                    </p>
+                </h3>
+
+                <h3 class="text-red-600 mb-4 text-2xl">
                     Delete this Post
                     <p class="text-gray-800 text-xl">
                         Once you delete a post, there is no going back. Please be certain.
