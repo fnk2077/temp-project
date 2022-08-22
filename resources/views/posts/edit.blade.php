@@ -44,17 +44,18 @@
                     @endforeach
                 </select>
             </div>
-
-            <div class="container">
-                <label class="form-label text-green-400" style="font-weight: bold;" for="progression">Tags</label>
-                <select class="form-input" style="color: #41A7A5" aria-label="Default select example" id="progression" name="progression" required >
-                    <option selected disabled hidden value="">-------Select Tags-------</option>
-                    <option value="ยื่นคำร้อง/ปัญหา" id="progression" name="progression" >ยื่นคำร้อง/ปัญหา</option>
-                    <option value="รับคำร้อง/ปัญหา" id="progression" name="progression" >รับคำร้อง/ปัญหา</option>
-                    <option value="กำลังดำเนินการ" id="progression" name="progression" >กำลังดำเนินการ</option>
-                    <option value="เสร็จสมบูรณ์" id="progression" name="progression" >เสร็จสมบูรณ์</option>
-                </select>
-            </div>
+                @can('updateStatus',$post)
+                <div class="container">
+                    <label class="form-label text-green-400" style="font-weight: bold;" for="progression">Tags</label>
+                    <select class="form-input" style="color: #41A7A5" aria-label="Default select example" id="progression" name="progression" required >
+                        <option selected disabled hidden value="">-------Select Tags-------</option>
+                        <option value="ยื่นคำร้อง/ปัญหา" id="progression" name="progression" >ยื่นคำร้อง/ปัญหา</option>
+                        <option value="รับคำร้อง/ปัญหา" id="progression" name="progression" >รับคำร้อง/ปัญหา</option>
+                        <option value="กำลังดำเนินการ" id="progression" name="progression" >กำลังดำเนินการ</option>
+                        <option value="เสร็จสมบูรณ์" id="progression" name="progression" >เสร็จสมบูรณ์</option>
+                    </select>
+                </div>
+                @endcan
 
             <div class="relative z-0 mb-6 w-full group">
                 <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
@@ -72,8 +73,11 @@
 
             <div >
                 <label>Choose Images</label>
-                <input type="file" id="browse" name="images[]" multiple required>
+                <input type="file" id="browse" name="images[]" multiple>
             </div>
+
+
+
 
             <div>
                 <button class="app-button" type="submit">Edit</button>
@@ -81,6 +85,36 @@
 
         </form>
     </section>
+
+    <section class="mx-8 mt-16">
+                    <h3 class="text-red-600 mb-4 text-2xl">
+                        Delete Images
+                        <p class="text-gray-800 text-xl">
+                            Once you delete images, there is no going back. Please be certain.
+                        </p>
+                    </h3>
+
+
+                    <div class="container">
+                        <label class="form-label text-green-400" style="font-weight: bold;" for="organizations">Tags</label>
+                        <select class="form-input" style="color: #41A7A5" aria-label="Default select example" id="images" name="images" required >
+                            <option selected disabled hidden value="">-------Select Image-------</option>
+                            @foreach($post->images as $image)
+                                <option value="{{$image->title}}" id="images" name="images" >{{$image->title}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div>
+                        <button class="app-button red" type="submit">DELETE IMAGE</button>
+                    </div>
+
+                    <div>
+                        <button class="app-button red" type="submit">DELETE ALL IMAGES</button>
+                    </div>
+    </section>
+
+
 
     @can('delete', $post)
         <section class="mx-8 mt-16">
@@ -93,13 +127,8 @@
                 </div>
             </div>
 
-            <div>
-                <h3 class="text-red-600 mb-4 text-2xl">
-                    Delete Images
-                    <p class="text-gray-800 text-xl">
-                        Once you delete images, there is no going back. Please be certain.
-                    </p>
-                </h3>
+
+
 
                 <h3 class="text-red-600 mb-4 text-2xl">
                     Delete this Post

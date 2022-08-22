@@ -72,7 +72,7 @@ class PostController extends Controller
 
         $post->tag_id = $request->input('tags');
         $post->organization_tag_id = $request->input('organizations');
-        $post->progression = $request->input('progression');
+        $post->progression = "ยื่นคำร้อง/ปัญหา";
 
 
 
@@ -159,7 +159,9 @@ class PostController extends Controller
         $post->description = $request->input('description');
         $post->tag_id = $request->input('tags');
         $post->organization_tag_id = $request->input('organizations');
-        $post->progression = $request->input('progression');
+        if($request->input('progression')){
+            $post->progression = $request->input('progression');
+        }
 
         if($request->hasFile('images')) {
             $request->validate([
@@ -176,6 +178,8 @@ class PostController extends Controller
                 $save->save();
                 $post->images()->save($save);
             }
+        }else{
+            $post->save();
         }
 
 
@@ -199,7 +203,10 @@ class PostController extends Controller
         }
         return redirect()->back();
     }
-    
+
+    public function deleteImage(Request $request){
+
+    }
 
 
 

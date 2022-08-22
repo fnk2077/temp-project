@@ -48,17 +48,6 @@
                 </select>
             </div>
 
-            <div class="container">
-                <label class="form-label text-green-400" style="font-weight: bold;" for="progression">Tags</label>
-                <select class="form-input" style="color: #41A7A5" aria-label="Default select example" id="progression" name="progression" required >
-                    <option selected disabled hidden value="">-------Select Tags-------</option>
-                    <option value="ยื่นคำร้อง/ปัญหา" id="progression" name="progression" >ยื่นคำร้อง/ปัญหา</option>
-                    <option value="รับคำร้อง/ปัญหา" id="progression" name="progression" >รับคำร้อง/ปัญหา</option>
-                    <option value="กำลังดำเนินการ" id="progression" name="progression" >กำลังดำเนินการ</option>
-                    <option value="เสร็จสมบูรณ์" id="progression" name="progression" >เสร็จสมบูรณ์</option>
-                </select>
-            </div>
-
             <div class="relative z-0 mb-6 w-full group">
                 <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
                     Post Description
