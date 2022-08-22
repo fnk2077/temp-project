@@ -30,6 +30,8 @@ Route::post('/posts/{post}/comments/store', [\App\Http\Controllers\PostControlle
 Route::post('/posts/{post}/statusTrackers/store', [\App\Http\Controllers\PostController::class, 'storeStatus'])
     ->name('posts.statusTrackers.store');
 
+Route::resource('/users',\App\Http\Controllers\UserController::class);
+
 Route::resource('/posts', \App\Http\Controllers\PostController::class);
 
 Route::resource('/tags', \App\Http\Controllers\TagController::class);

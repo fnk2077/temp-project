@@ -70,6 +70,11 @@
                           required >{{ old('description', $post->description) }}</textarea>
             </div>
 
+            <div >
+                <label>Choose Images</label>
+                <input type="file" id="browse" name="images[]" multiple required>
+            </div>
+
             <div>
                 <button class="app-button" type="submit">Edit</button>
             </div>

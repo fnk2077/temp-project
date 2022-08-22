@@ -116,6 +116,10 @@ class PostController extends Controller
      */
     public function show(Post $post)    // Dependency Injection
     {
+        if($post->id != null){
+            $post->view_count++;
+            $post->save();
+        }
         return view('posts.show', ['post' => $post])->with('status',$post->status);
     }
 
@@ -157,7 +161,22 @@ class PostController extends Controller
         $post->organization_tag_id = $request->input('organizations');
         $post->progression = $request->input('progression');
 
-        $post->save();
+        if($request->hasFile('images')) {
+            $request->validate([
+                'images' => 'required',
+                'images.*' => 'mimes:jpg,png,jpeg,gif,svg'
+            ]);
+            $post->save();
+            foreach ($request->file('images') as $saves) {
+                $save = new Image();
+                $title = time() . $saves->getClientOriginalName();
+                $saves->move(public_path() . '/images/', $title);
+                $save->title = $title;
+                $save->post_id = $post->id;
+                $save->save();
+                $post->images()->save($save);
+            }
+        }
 
 
         return redirect()->route('posts.show', ['post' => $post->id])->with('status',$post->status);;
