@@ -30,6 +30,12 @@ Route::post('/posts/{post}/comments/store', [\App\Http\Controllers\PostControlle
 Route::post('/posts/{post}/statusTrackers/store', [\App\Http\Controllers\PostController::class, 'storeStatus'])
     ->name('posts.statusTrackers.store');
 
+Route::post('/posts/{post}/images/deleteAll', [\App\Http\Controllers\PostController::class, 'deleteAllImages'])
+    ->name('posts.images.deleteAll');
+
+Route::post('/posts/{post}/images/deleteImage', [\App\Http\Controllers\PostController::class,'deleteImage'])
+    ->name('posts.images.deleteImage');
+
 Route::resource('/users',\App\Http\Controllers\UserController::class);
 
 Route::resource('/posts', \App\Http\Controllers\PostController::class);
@@ -41,3 +47,5 @@ Route::resource('/organizationTags', \App\Http\Controllers\OrganizationTagContro
 Route::resource('/charts', \App\Http\Controllers\ChartController::class);
 
 Route::get('/search',[\App\Http\Controllers\PostController::class ,'search']);
+
+Route::get('/sortByView',[\App\Http\Controllers\PostController::class,'sortByView']);

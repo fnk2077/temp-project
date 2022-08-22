@@ -51,6 +51,10 @@ class Post extends Model
             ->where('view_count', '>=', $view_count);
     }
 
+    public function scopeSortByView($query){
+        return $query->orderBy('view_count');
+    }
+
     public function scopeFilterTitle($query, $search)
     {
         return $query->where('title', 'LIKE', "%{$search}%"); // % wildcard

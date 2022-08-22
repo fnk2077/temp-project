@@ -10,8 +10,10 @@ use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
+
 
 class PostController extends Controller
 {
@@ -136,7 +138,7 @@ class PostController extends Controller
         $tags = $post->tag->name;
 
 
-        return view('posts.edit', ['post' => $post, 'tags' => $tags, 'organizations'])->with('status',$post->status);;
+        return view('posts.edit', ['post' => $post, 'tags' => $tags, 'organizations'])->with('status',$post->status);
     }
 
     /**
@@ -198,15 +200,36 @@ class PostController extends Controller
 
         $title = $request->input('title');
         if ($title == $post->title) {
+            foreach($post->images as $image) {
+                File::delete('images/'.$image->title);
+            }
             $post->delete();
             return redirect()->route('posts.index')->with('status',$post->status);;
         }
         return redirect()->back();
     }
 
-    public function deleteImage(Request $request){
-
+    public function deleteImage(Request $request, Post $post){
+        foreach ($post->images as $image){
+            if($image->title == $request->input('imageNames')){
+                File::delete('images/'.$image->title);
+                Image::where('title',$request->input('imageNames'))->first()->delete();
+            }
+        }
+        return redirect()->route('posts.edit',['post' => $post->id])->with('status',$post->status);
     }
+
+
+
+
+    public function deleteAllImages(Post $post){
+        foreach($post->images as $image) {
+            File::delete('images/'.$image->title);
+        }
+        $post->images()->delete();
+        return redirect()->route('posts.edit',['post' => $post->id])->with('status',$post->status);
+    }
+
 
 
 
@@ -227,10 +250,15 @@ class PostController extends Controller
     }
 
     public function search(Request $request){
-        $search = $request->get('search');
-        $posts = Post::where('title','LIKE', '%'.$search.'%')->paginate(15);
+        $posts = Post::filterTitle($request->input('search'))->get();
         return view('posts.index',['posts' => $posts]);
     }
+
+    public function sortByView(){
+        $posts = Post::sortByView()->get();
+        return view('posts.index',['posts'=>$posts]);
+    }
+
 
 
 }

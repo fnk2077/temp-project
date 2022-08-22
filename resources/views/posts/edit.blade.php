@@ -95,23 +95,31 @@
                     </h3>
 
 
-                    <div class="container">
-                        <label class="form-label text-green-400" style="font-weight: bold;" for="organizations">Tags</label>
-                        <select class="form-input" style="color: #41A7A5" aria-label="Default select example" id="images" name="images" required >
-                            <option selected disabled hidden value="">-------Select Image-------</option>
-                            @foreach($post->images as $image)
-                                <option value="{{$image->title}}" id="images" name="images" >{{$image->title}}</option>
-                            @endforeach
-                        </select>
-                    </div>
 
-                    <div>
-                        <button class="app-button red" type="submit">DELETE IMAGE</button>
-                    </div>
+                    <form action="{{ route('posts.images.deleteImage',['post' => $post->id]) }}" method="post">
+                        @csrf
+                        <div class="container">
+                            <label class="form-label text-green-400" style="font-weight: bold;" for="imageNames">Tags</label>
+                            <select class="form-input" style="color: #41A7A5" aria-label="Default select example" id="imageNames" name="imageNames" required >
+                                <option selected disabled hidden value="">-------Select Image-------</option>
+                                @foreach($post->images as $image)
+                                    <option value="{{$image->title}}" id="imageNames" name="imageNames" >{{$image->title}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <button class="app-button red" type="submit">DELETE IMAGE</button>
+                        </div>
+                    </form>
 
-                    <div>
-                        <button class="app-button red" type="submit">DELETE ALL IMAGES</button>
-                    </div>
+                    <form action="{{ route('posts.images.deleteAll',['post' => $post->id]) }}" method="post">
+                        @csrf
+                        <div>
+                            <button class="app-button red" type="submit">DELETE ALL IMAGES</button>
+                        </div>
+                    </form>
+
+
     </section>
 
 

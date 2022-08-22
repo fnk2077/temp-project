@@ -42,6 +42,7 @@
                            Chart
                         </a>
                     </li>
+                    
 
                     <li>
                         <form action="/search" method="get" class="pt-4">
