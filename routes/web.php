@@ -36,7 +36,12 @@ Route::post('/posts/{post}/images/deleteAll', [\App\Http\Controllers\PostControl
 Route::post('/posts/{post}/images/deleteImage', [\App\Http\Controllers\PostController::class,'deleteImage'])
     ->name('posts.images.deleteImage');
 
+Route::post('/posts/{post}/likes/like',[\App\Http\Controllers\PostController::class,'like'])
+    ->name('posts.likes.like');
+
 Route::resource('/users',\App\Http\Controllers\UserController::class);
+
+Route::resource('/popularposts',\App\Http\Controllers\PopularPostController::class);
 
 Route::resource('/posts', \App\Http\Controllers\PostController::class);
 

@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return $this->role === 'USER';
     }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
 }

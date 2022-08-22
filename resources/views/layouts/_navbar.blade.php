@@ -42,7 +42,7 @@
                            Chart
                         </a>
                     </li>
-                    
+
 
                     <li>
                         <form action="/search" method="get" class="pt-4">
@@ -50,6 +50,7 @@
                                 <button class="app-button-orange" type="submit">Search</button>
                         </form>
                     </li>
+
 
                 </div>
 
@@ -82,6 +83,9 @@
                                 <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
                                     <li>
                                         <a href="{{route('users.index')}}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">My Posts</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('popularposts.index')}}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Popular and Most Liked Posts</a>
                                     </li>
                                     <li>
                                         <form method="POST" action="{{ route('logout') }}">

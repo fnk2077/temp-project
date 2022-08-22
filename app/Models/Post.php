@@ -28,6 +28,11 @@ class Post extends Model
         return $this->hasMany(Image::class);
     }
 
+    public function likes(){
+        return $this->hasMany(Like::class);
+    }
+
+
     // Post hasMany comments, 1 โพสต์ มีหลาย คอมเมนต์ (มี s ด้วย)
     // ฟังก์ชัน คืนค่า ความสัมพันธ์ hasMany
     // attribute `comments` คืนค่า Collection ที่ผูกกับ Post นั้น
@@ -52,7 +57,11 @@ class Post extends Model
     }
 
     public function scopeSortByView($query){
-        return $query->orderBy('view_count');
+        return $query->orderBy('view_count','DESC');
+    }
+
+    public function scopeSortByLike($query){
+        return $query->orderBy('Like_count','DESC');
     }
 
     public function scopeFilterTitle($query, $search)

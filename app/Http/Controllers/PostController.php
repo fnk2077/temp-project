@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Image;
+use App\Models\Like;
 use App\Models\OrganizationTag;
 use App\Models\StatusTracker;
 use App\Models\Tag;
-use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 
 class PostController extends Controller
@@ -104,7 +105,7 @@ class PostController extends Controller
         $post->statusTrackers()->save($statusTracker);
 
 
-        return redirect()->route('posts.show', ['post' => $post->id])->with('status',$post->status);
+        return redirect()->route('posts.show', ['post' => $post->id]);
         //                     -------------------------^
         //                    |
         // GET|HEAD  posts/{post} ......... posts.show › PostController@show
@@ -122,7 +123,7 @@ class PostController extends Controller
             $post->view_count++;
             $post->save();
         }
-        return view('posts.show', ['post' => $post])->with('status',$post->status);
+        return view('posts.show', ['post' => $post]);
     }
 
     /**
@@ -138,7 +139,7 @@ class PostController extends Controller
         $tags = $post->tag->name;
 
 
-        return view('posts.edit', ['post' => $post, 'tags' => $tags, 'organizations'])->with('status',$post->status);
+        return view('posts.edit', ['post' => $post, 'tags' => $tags, 'organizations']);
     }
 
     /**
@@ -185,7 +186,7 @@ class PostController extends Controller
         }
 
 
-        return redirect()->route('posts.show', ['post' => $post->id])->with('status',$post->status);;
+        return redirect()->route('posts.show', ['post' => $post->id]);
     }
 
     /**
@@ -204,7 +205,7 @@ class PostController extends Controller
                 File::delete('images/'.$image->title);
             }
             $post->delete();
-            return redirect()->route('posts.index')->with('status',$post->status);;
+            return redirect()->route('posts.index');
         }
         return redirect()->back();
     }
@@ -216,7 +217,7 @@ class PostController extends Controller
                 Image::where('title',$request->input('imageNames'))->first()->delete();
             }
         }
-        return redirect()->route('posts.edit',['post' => $post->id])->with('status',$post->status);
+        return redirect()->route('posts.edit',['post' => $post->id]);
     }
 
 
@@ -227,7 +228,7 @@ class PostController extends Controller
             File::delete('images/'.$image->title);
         }
         $post->images()->delete();
-        return redirect()->route('posts.edit',['post' => $post->id])->with('status',$post->status);
+        return redirect()->route('posts.edit',['post' => $post->id]);
     }
 
 
@@ -238,7 +239,7 @@ class PostController extends Controller
         $comment = new Comment();
         $comment->message = $request->get('message');
         $post->comments()->save($comment);
-        return redirect()->route('posts.show', ['post' => $post->id])->with('status',$post->status);;
+        return redirect()->route('posts.show', ['post' => $post->id]);
     }
 
     public function storeStatus(Request $request, Post $post)
@@ -246,7 +247,7 @@ class PostController extends Controller
         $statusTracker = new StatusTracker();
         $statusTracker->message = $request->get('message');
         $post->statusTrackers()->save($statusTracker);
-        return redirect()->route('posts.show', ['post' => $post->id])->with('status',$post->status);;
+        return redirect()->route('posts.show', ['post' => $post->id]);
     }
 
     public function search(Request $request){
@@ -254,9 +255,19 @@ class PostController extends Controller
         return view('posts.index',['posts' => $posts]);
     }
 
-    public function sortByView(){
-        $posts = Post::sortByView()->get();
-        return view('posts.index',['posts'=>$posts]);
+
+    public function like(Post $post){
+        $user = Auth::user();
+        $likeStatus = $user->likes()->where('post_id', $post->id)->count();
+        if( $likeStatus == 0){
+            Like::create(['user_id' => $user->id, 'post_id'=> $post->id]);
+            $post->like_count++;
+        }else{
+            $user->likes()->where('post_id',$post->id)->delete();
+            $post->like_count--;
+        }
+        $post->save();
+        return redirect()->route('posts.show', ['post' => $post->id,'likeStatus' => $likeStatus]);
     }
 
 
